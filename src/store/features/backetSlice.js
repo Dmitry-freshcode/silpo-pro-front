@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const backetSlice = createSlice({
   name: 'backet',
-  initialState: [],
+  initialState: JSON.parse(localStorage.getItem('backet')) || [],
   reducers: {
     add: (state, action) => { 
         const storage = JSON.parse(localStorage.getItem('backet'));
         let newStorage=[];
-        if(storage.length>0){ 
+        if(storage && storage.length>0){ 
             newStorage = storage;                
             newStorage.push(action.payload);       
         } else{

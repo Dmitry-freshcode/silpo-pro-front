@@ -51,18 +51,18 @@ export default function Header(props) {
   const sort = useSelector(store=>store.sort);
   const products = useSelector(store=>store.products);
 
-  // useEffect(()=>{
-  //   if(products.length>0){
-  //     const localStor = JSON.parse(localStorage.getItem('backet'));
-  //     if(localStor.length>0){
-  //       const newStorage = JSON.stringify(
-  //         localStor.filter(item=>products.find(elem=>elem._id===item))
-  //       )
-  //       localStorage.setItem('backet',newStorage)
-  //     }
+  useEffect(()=>{
+    if(products.length>0){
+      const localStor = JSON.parse(localStorage.getItem('backet'));
+      if(localStor && localStor.length>0){
+        const newStorage = JSON.stringify(
+          localStor.filter(item=>products.find(elem=>elem._id===item))
+        )
+        localStorage.setItem('backet',newStorage)
+      }
       
-  //   }
-  // },[products])
+    }
+  },[products])
 
   const buttomArrow = useCallback(value=>{
     if(value===sort.field){
