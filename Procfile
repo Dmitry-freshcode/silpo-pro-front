@@ -1,0 +1,1 @@
+web: npm i -g serve && NODE_ENV=production serve -s build
