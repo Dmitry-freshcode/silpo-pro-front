@@ -29,10 +29,8 @@ export default function ProductsList({ products }) {
     <div className={classes.root}>
       {products.length > 0 ? (
         products.map((item) => {
-          return (
-            <LazyLoad key={item._id} height={200} offset={100}>
-              <ProductCard key={item._id} item={item} />
-            </LazyLoad>
+          return (          
+              <ProductCard key={item._id} item={item} />            
           );
         })
       ) : (

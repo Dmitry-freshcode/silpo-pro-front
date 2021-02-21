@@ -12,6 +12,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import { useDispatch, useSelector } from "react-redux";
 import { add, remove } from "../../store/features/backetSlice";
+import LazyLoad from "react-lazyload";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     backgroundColor: "#f2e8db",
   },
-  title:{
-      fontWeight: "bold",
-      fontSize: "18px",
+  title: {
+    fontWeight: "bold",
+    fontSize: "18px",
   },
   details: {
     display: "flex",
@@ -38,47 +39,59 @@ const useStyles = makeStyles((theme) => ({
     width: 151,
     position: "relative",
     flexBasis: "50%",
-    backgroundSize:"contain", 
+    backgroundSize: "contain",
   },
   star: {
     position: "absolute",
     top: "10px",
     right: "10px",
   },
-  prices:{
-display: "flex",
-justifyContent: "space-around",
+  prices: {
+    display: "flex",
+    justifyContent: "space-around",
   },
-  oldPrice:{
+  oldPrice: {
     textDecoration: "line-through",
   },
-  newPrice:{
+  newPrice: {
     fontSize: "26px",
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
-  discount:{
+  discount: {
     position: "absolute",
     bottom: "20px",
-    right: "10px", 
+    right: "10px",
     color: "red",
     fontSize: "26px",
     fontWeight: "bold",
-  }
+  },
+  imgContainer:{
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height :"100%",
+      width:"100%",
+  },
+  img: {
+    width: "100%",
+    objectFit: "cover",
+  },
 }));
 
 export default function ProductCard(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const backet = useSelector(store=>store.backet)
-  const dispatch = useDispatch(); 
+  const backet = useSelector((store) => store.backet);
+  const dispatch = useDispatch();
 
   const handler = useCallback(
-    (id) => {     
-      if (backet.length>0) {
+    (id) => {
+      if (backet.length > 0) {
         if (backet.find((item) => item === id)) {
-            dispatch(remove(id))
+          dispatch(remove(id));
         } else {
-           dispatch(add(id));
+          dispatch(add(id));
         }
       } else {
         dispatch(add(id));
@@ -89,7 +102,7 @@ export default function ProductCard(props) {
 
   const star = useCallback(
     (id) => {
-      if (backet.length>0) {     
+      if (backet.length > 0) {
         return !!backet.find((item) => item === id);
       } else return false;
     },
@@ -100,36 +113,42 @@ export default function ProductCard(props) {
     <Card className={classes.root} onClick={() => handler(props.item._id)}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <div className={classes.title}>
-            {props.item.title}
-          </div>
+          <div className={classes.title}>{props.item.title}</div>
           <Typography variant="subtitle1" color="textSecondary">
             {props.item.weight}
           </Typography>
         </CardContent>
         <div className={classes.prices}>
-            <div className={classes.oldPrice}>
-                {props.item.oldPrice}грн.
-            </div>
-            <div className={classes.newPrice}>
-                {props.item.price}грн.
-            </div>
+          <div className={classes.oldPrice}>{props.item.oldPrice}грн.</div>
+          <div className={classes.newPrice}>{props.item.price}грн.</div>
         </div>
       </div>
-      <CardMedia
+      
+        <div className={classes.imgContainer}>
+        <LazyLoad offset={300}>
+          <img
+            className={classes.img}
+            src={props.item.imageUrl}
+            alt={props.item.slug}
+          />
+          </LazyLoad>
+          {/* <CardMedia
         className={classes.cover}
         image={props.item.imageUrl}
         title={props.item.slug}
-      >
-        <div className={classes.star}>
-          {star(props.item._id) ? (
-            <StarIcon fontSize="large" htmlColor="#ec952a" />
-          ) : (
-            <StarOutlineIcon fontSize="large" htmlColor="#ec952a" />
-          )}
+      > */}
+          <div className={classes.star}>
+            {star(props.item._id) ? (
+              <StarIcon fontSize="large" htmlColor="#ec952a" />
+            ) : (
+              <StarOutlineIcon fontSize="large" htmlColor="#ec952a" />
+            )}
+          </div>
+          <div className={classes.discount}>{props.item.discount}%</div>
+
+          {/* </CardMedia> */}
         </div>
-        <div className={classes.discount}>{props.item.discount}%</div>
-      </CardMedia>
+      
     </Card>
   );
 }
