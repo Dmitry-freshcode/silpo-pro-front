@@ -26,7 +26,6 @@ export const sortSlice = createSlice({
   }
 })
 
-// Action creators are generated for eache case reducer function
 export const { selectSort } = sortSlice.actions
 
 export default sortSlice.reducer
