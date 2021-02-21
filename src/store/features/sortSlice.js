@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const sortSlice = createSlice({
   name: 'sort',
   initialState: {
-    field: 'name',
+    field: 'slug',
     sort: 1,    
     limit:9999,
     skip:0,
