@@ -7,4 +7,3 @@ ADD . .
 #RUN npm prune --prodiction
 #CMD ["node","./dist/main.js"]
 CMD ["npm","run","start"]
-git
