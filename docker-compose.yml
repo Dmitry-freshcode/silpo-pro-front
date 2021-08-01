@@ -1,0 +1,16 @@
+version: '3.0'
+
+services:
+  main:
+    container_name: front-silpo-container
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - node_modules:/home/node/app/node_modules
+    ports:
+      - 3000:3000
+    command: npm run start
+    restart: always
+volumes:
+  node_modules:
