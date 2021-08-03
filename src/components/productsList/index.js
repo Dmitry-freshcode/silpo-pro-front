@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   ul: {
     overflow: "auto",
     maxHeight: "100vh",
-    overflow: "-moz-scrollbars-none",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": {
       width: "0 !important",
