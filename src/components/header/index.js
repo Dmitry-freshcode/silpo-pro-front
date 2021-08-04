@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LocalGroceryStoreOutlinedIcon from "@material-ui/icons/LocalGroceryStoreOutlined";
 import { ButtonGroup, Button } from "@material-ui/core/";
 import SortIcon from '@material-ui/icons/Sort';
+import {add} from "../../store/features/backetSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   let history = useHistory();
+  const dispatch = useDispatch();
   const sort = useSelector(store=>store.sort);
   const products = useSelector(store=>store.products);
 
@@ -56,11 +58,10 @@ export default function Header(props) {
       const localStor = JSON.parse(localStorage.getItem('backet'));
       if(localStor && localStor.length>0){
         const newStorage = JSON.stringify(
-          localStor.filter(item=>products.find(elem=>elem._id===item))
+          localStor.filter(item=>products.find(elem=>elem.id===item))
         )
         localStorage.setItem('backet',newStorage)
       }
-      
     }
   },[products])
 
@@ -70,7 +71,6 @@ export default function Header(props) {
     } else {return null}
   })
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: sagaActions.FETCH_DATA_SAGA });
   }, []);

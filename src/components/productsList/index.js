@@ -22,16 +22,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsList({ products }) {
+export default function ProductsList({ products }) {console.log(products);
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {products.length > 0 ? (
-        products.map((item) => {
+      {products && products.length > 0 ? (
+        products.map((item,index) => {
           return (          
-              <ProductCard key={item._id} item={item} />            
+              <ProductCard key={`${item.id}_${index}`} item={item} />
           );
-        })
+        }
+        )
       ) : (
         <h1>нет продуктов</h1>
       )}

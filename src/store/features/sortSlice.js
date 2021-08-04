@@ -4,7 +4,7 @@ export const sortSlice = createSlice({
   name: 'sort',
   initialState: {
     field: 'discount',
-    sort: 0,
+    sort: -1,
     limit:9999,
     skip:0,
 

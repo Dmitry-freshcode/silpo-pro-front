@@ -4,7 +4,7 @@ export const backetSlice = createSlice({
   name: 'backet',
   initialState: JSON.parse(localStorage.getItem('backet')) || [],
   reducers: {
-    add: (state, action) => { 
+    add: (state, action) => {
         const storage = JSON.parse(localStorage.getItem('backet'));
         let newStorage=[];
         if(storage && storage.length>0){ 

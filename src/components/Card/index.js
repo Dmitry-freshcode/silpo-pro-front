@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -86,31 +86,31 @@ export default function ProductCard(props) {
   const dispatch = useDispatch();
 
   const handler = useCallback(
-    (id) => {
+    () => {console.log(props.item.id);
       if (backet.length > 0) {
-        if (backet.find((item) => item === id)) {
-          dispatch(remove(id));
+        if (backet.find((item) => item === props.item.id)) {
+          dispatch(remove(props.item.id));
         } else {
-          dispatch(add(id));
+          dispatch(add(props.item.id));
         }
       } else {
-        dispatch(add(id));
+        dispatch(add(props.item.id));
       }
     },
     [backet]
   );
 
-  const star = useCallback(
-    (id) => {
+  const star = useMemo(
+      () => {
       if (backet.length > 0) {
-        return !!backet.find((item) => item === id);
+        return !!backet.find((item) => item === props.item.id);
       } else return false;
     },
     [backet]
   );
 
   return (
-    <Card className={classes.root} onClick={() => handler(props.item._id)}>
+    <Card className={classes.root} onClick={handler}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <div className={classes.title}>{props.item.title}</div>
@@ -138,7 +138,7 @@ export default function ProductCard(props) {
         title={props.item.slug}
       > */}
           <div className={classes.star}>
-            {star(props.item._id) ? (
+            {star ? (
               <StarIcon fontSize="large" htmlColor="#ec952a" />
             ) : (
               <StarOutlineIcon fontSize="large" htmlColor="#ec952a" />

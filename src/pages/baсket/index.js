@@ -10,10 +10,15 @@ function Backet() {
   const products = useSelector((store) => store.products);
 
   const backetProducts = useMemo(() => {
-    return products.filter((item) => backet.find((elem) => elem === item._id));
-  }, [backet, products]);
-
-  return <ProductsList products={backetProducts} />;
-}
+    if(products.length>0 && backet.length>0){
+      console.log(products);console.log(backet);
+      return backet.map(item=>products.find(elem=>item===elem.id));
+    }
+    return null;
+  }, [backet, products]);console.log(backetProducts);
+  return (<>
+      <ProductsList products={backetProducts} />
+     </> )
+};
 
 export default Backet;
